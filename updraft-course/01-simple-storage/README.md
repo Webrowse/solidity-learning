@@ -1,77 +1,84 @@
+# 01 - Simple Storage
 
-# 01-simple-storage
+This is a basic smart contract that demonstrates fundamental Solidity concepts like variables, structs, arrays, mappings, and functions.
 
-### Few formalities of solidity smart contract
+## What This Contract Does
 
-- // SPDX-License-Identifier: MIT
-- pragma solidity version;
-- contract NameOfTheContract {}
-    (In camel case)
+- Stores and retrieves a `uint256` value (`myFavoriteNumber`)
+- Allows adding people with names and favorite numbers
+- Maps each person's name to their favorite number
 
-### WAYS TO WRITE SOLIDITY VERSION
-- exact version: ```0.8.18;```
-- this or above: ```^0.8.18;```
-- in-between these 2 versions: ```>=0.8.0 <0.9.0;```
+## Key Solidity Concepts
 
-#### WAYS TO DECLARE VARIABLES AND THEIR DEFAULT VALUES
+1. Pragma
+Used to define the Solidity compiler version:
+`pragma solidity 0.8.19;`
+// Or: ^0.8.19 — anything >=0.8.19 <0.9.0
 
----
-1. uint for unsigned integers takes uint8, uint16, uint32, uint64, uint128, uint256.
-But if you dont write bytes, it takes uint256 by default. Same with the int for signed.
+2. Variable Types
 
-- Default Value for all uint and int = 0;
-- initialize -> ```uint256 myNumber = 23;```
+Unsigned Integers
+`uint256 myNumber = 23;` // Default size is uint256
+- Other types: uint8, uint16, ..., uint256
+- Default value: 0
 
----
+Booleans
+`bool isItDone = true;`
+- Default value: false
 
-2. Boolean is simply 'bool',
-- Default value for bool is false,
-- initialize -> ```bool isItDone = true;```
----
-3. String 
-- ```string myFirstString  = "Hello Solidity!"```
----
-4. Struct
-- ``` solidity
-    struct Person{
-        uint256 aNumber;
-        string name;
-    } 
-    ```
----
-5. Arrays
-- declaration: ```Person[] public listOfPeople;```
-- usage: ```listOfPeople.push(dataToBePushed)```
----
+Strings
+`string message = "Hello Solidity!";`
 
-### WRITE FUNCTIONS
----
-```function functionName(dataType dataName) public {}```
+Structs
+`struct Person {
+    uint256 favoriteNumber;
+    string name;
+}`
 
-```function functionName2 (string memory name) {}```
+3. Arrays
+`Person[] public listOfPeople;`
+`listOfPeople.push(Person(_number, _name));`
 
-the heap memory things ned to be pass as argument with ```memory``` or ```call``` keyword. Since they are temporary and die with the function call.
----
-### VISIBILITY KEYWORDS
----
-- public: for everyone, anywhere
-- private: for inside of the contract
-- internal: for inside and derived contracts
-- external: only for otherside.
----
-### MISCELLENEOUS KEYWORDS
----
-When you don't want to change the state of the data on-chain:
-- view: when you just want to return a variable.
-- pure: when you want to return a fixed value, nothing derived.
----
-### MAPPING
----
-declaration: ```mapping(string => uint256) public stringToNumber```
+4. Mappings
+`mapping(string => uint256) public nameToFavoriteNumber;`
+`nameToFavoriteNumber["Alice"] = 42;`
 
-usage: ```stringToNumber[putStringHere] = uint256-NumberVariable```
+5. Functions
+`function store(uint256 _number) public {
+    myFavoriteNumber = _number;
+}`
 
-this maps a string to a uint256 number, that will be connected 
+`function retrieve() public view returns (uint256) {
+    return myFavoriteNumber;
+}`
 
+// `view` = read-only
+// `pure` = returns computed values with no state access
 
+## Visibility
 
+- `public` – accessible anywhere
+- `private` – only inside this contract
+- `internal` – inside and child contracts
+- `external` – only callable from outside (not internally)
+
+## Memory vs Storage
+
+- `memory` – temporary, only for function scope (e.g., `strings`, `arrays`)
+- `storage` – permanent, writes to blockchain
+
+Example:
+`function addPerson(string memory _name, uint256 _number) public {
+    ...
+}`
+
+## Contract Summary
+
+- `store()`: saves a number
+- `retrieve()`: returns the number
+- `addPerson()`: saves a person's name and number in array + mapping
+
+## Files
+
+- SimpleStorage.sol – contract code
+- README.md – this file
