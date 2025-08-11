@@ -1,6 +1,7 @@
 # 02 - Storage Factory
 
 A smart contract that deploy another smart contract.
+
 ---
 
 ## Storagefactory.sol
@@ -26,4 +27,5 @@ SimpleStorage was named imported to the StorageFactory.sol
 It import SimpleStorage contract from SimpleStorage.sol.
 `AddFiveStorage()`: Overrides store() function of SimpleStorage with `override` keyword.
 It adds 5 to the input number.
+
 ---
